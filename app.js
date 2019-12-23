@@ -5,6 +5,8 @@ const writeChangestoSpecFile = require('./fileWrite.js')
 const cors = require('cors')
 let openApiSpecOrch = require('./orchestratorOpenApi.json')
 const OpenApiRouteBlock = require('./openApiRouteBlock.js')
+const swaggerUi = require('swagger-ui-express');
+
 
 const OpenApiValidator = require('express-openapi-validator').OpenApiValidator;
 // var indexRouter = require('./routes/index');
@@ -17,7 +19,7 @@ app.use(cors());
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'pug');
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSpecOrch));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -28,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 if(process.env['EXTEND_SPEC'] === 'YES') {
   app.post('/create-spec', (req, res) => {
     console.log('asdasdasdasd');
-    var newRoute = req.body.url.join('/').toLowerCase();
+    var newRoute = '/' + req.body.url.join('/').toLowerCase();
   
     var requestBlock = {}
   
@@ -48,29 +50,29 @@ if(process.env['EXTEND_SPEC'] === 'YES') {
 }
 
 
-// new OpenApiValidator({
-//   apiSpec: './compute_spec.json',
-//   validateRequests: true,
-//   validateResponses: false
-// }).install(app).then(() => {
+new OpenApiValidator({
+  apiSpec: './orchestratorOpenApi.json',
+  validateRequests: true,
+  validateResponses: false
+}).install(app).then(() => {
 
-//   app.post('/:class/?:method', (req, res) => {
-//     res.json({ status: res })
-//   })
-//   app.get('/:class/?:method', (req, res) => {
-//     console.log(req.params)
-//     res.json({ id: req.params.id, name: 'sparky' })
-//   })
+  app.post('/:class/?:method', (req, res) => {
+    res.json({ status: res })
+  })
+  app.get('/:class/?:method', (req, res) => {
+    console.log(req.params)
+    res.json({ id: req.params.id, name: 'sparky' })
+  })
 
-//   app.use((err, req, res, next) => {
-//     // format error
-//     res.status(err.status || 500).json({
-//       message: err.message,
-//       errors: err.errors,
-//     });
-//   });
+  app.use((err, req, res, next) => {
+    // format error
+    res.status(err.status || 500).json({
+      message: err.message,
+      errors: err.errors,
+    });
+  });
 
-// })
+})
 
 
 

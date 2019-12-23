@@ -18,6 +18,23 @@ module.exports = (route, body) => {
                                 
                             },
                             "required": true
+                        },
+                        {
+                            "in": "header",
+                            "name": "X-Scope",
+                            "schema": {
+                                "type": "string" 
+                            },
+                            "required": true
+                        },
+                        {
+                            "in": "header",
+                            "name": "X-Org",
+                            "schema": {
+                                "type": "string"
+                                
+                            },
+                            "required": true
                         }
                     ],
                     "responses": {
@@ -48,6 +65,23 @@ module.exports = (route, body) => {
                         {
                             "in": "header",
                             "name": "X-Auth-Token",
+                            "schema": {
+                                "type": "string"
+                                
+                            },
+                            "required": true
+                        },
+                        {
+                            "in": "header",
+                            "name": "X-Scope",
+                            "schema": {
+                                "type": "string" 
+                            },
+                            "required": true
+                        },
+                        {
+                            "in": "header",
+                            "name": "X-Org",
                             "schema": {
                                 "type": "string"
                                 
