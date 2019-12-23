@@ -4,16 +4,14 @@ var showExample = false;
 
 module.exports = function processJSON(jsonString, show) {
   showExample = show
-  
-  
-  
   // var jsonString = jsonEditor.getValue().trim();
-  const stringJson = JSON.stringify(jsonString)
-  if (tryParseJSON(stringJson) === true) {
-    var json = JSON.parse(stringJson);
-    
+  //const stringJson = JSON.stringify(jsonString)
+  if (tryParseJSON(jsonString) === true) {
+    //var json = JSON.parse(jsonString);
+    var json = jsonString;
+
     var yamlReady = buildSwaggerJSON(json);
-   
+   console.log('yamlready',yamlReady)
     return yamlReady;
   //   jsonEditor2.setValue(JSON.stringify(yamlReady, null, 4));
   //   var x = stringify(yamlReady);
@@ -27,12 +25,13 @@ module.exports = function processJSON(jsonString, show) {
 function tryParseJSON(jsonString) {
   
   try {
-    var o = JSON.parse(jsonString);
+    //var o = JSON.parse(jsonString);
+    var o = jsonString;
     if (o && typeof o === "object") {
       return true;
     }
   } catch (e) {
-    //console.error(e, jsonString);
+    console.error(e, jsonString);
     return false;
   }
 
@@ -42,22 +41,13 @@ function tryParseJSON(jsonString) {
 function buildSwaggerJSON(data) {
   
   var keys = Object.keys(data);
-  
   var op = {
-    required: {},
+    required: keys,
     properties: {}
   };
   keys.forEach(function(x) {
     var value = data[x];
-    
-    console.log(value)
-
-    if(value === null || value === "" || (!value)){
-      
-      op.properties = keys
-    } else{
-      op.required = keys
-    } 
+  
     var typeData = typeOf(value);
     if (["array", "object", "null"].indexOf(typeData) === -1) {
       op.properties[x] = {

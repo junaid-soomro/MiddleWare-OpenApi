@@ -1,0 +1,104 @@
+{
+    "openapi": "3.0.0",
+    "components": {
+        "securitySchemes": {
+            "basicAuth": {
+                "type": "http",
+                "scheme": "basic"
+            }
+        }
+    },
+    "info": {
+        "title": "Sample API",
+        "description": "Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.",
+        "version": "0.1.9"
+    },
+    "paths": {
+        "network/ips": {
+            "get": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "network/create_router": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "is_admin_state_up",
+                                    "external_gateway_info",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "is_admin_state_up": {
+                                        "type": "boolean"
+                                    },
+                                    "external_gateway_info": {
+                                        "required": [
+                                            "network_id",
+                                            "enable_snat"
+                                        ],
+                                        "properties": {
+                                            "network_id": {
+                                                "type": "string"
+                                            },
+                                            "enable_snat": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        }
+    }
+}
