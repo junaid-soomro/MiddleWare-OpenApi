@@ -1,0 +1,43 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Sample API",
+		"description": "Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.",
+		"version": "0.1.9"
+	},
+	"servers": [
+		{
+			"url": "10.81.1.29:8002",
+			"description": "Optional server description, e.g. Main (production) server"
+		}
+	],
+	"paths": {
+		"/compute/create": {
+			"post": {
+				"summary": "Creates a server",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"data": {
+                                        "availability_zone" : {"type" : "string"}
+                                    
+                                         
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Created"
+					}
+				}
+			}
+		}
+	}
+}
