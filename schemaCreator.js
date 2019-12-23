@@ -6,14 +6,14 @@ module.exports = function processJSON(jsonString, show) {
   showExample = show
   
   
-  debugger;
+  
   // var jsonString = jsonEditor.getValue().trim();
   const stringJson = JSON.stringify(jsonString)
   if (tryParseJSON(stringJson) === true) {
     var json = JSON.parse(stringJson);
     
     var yamlReady = buildSwaggerJSON(json);
-   console.log('yamlready',yamlReady)
+   
     return yamlReady;
   //   jsonEditor2.setValue(JSON.stringify(yamlReady, null, 4));
   //   var x = stringify(yamlReady);
@@ -32,7 +32,7 @@ function tryParseJSON(jsonString) {
       return true;
     }
   } catch (e) {
-    console.error(e, jsonString);
+    //console.error(e, jsonString);
     return false;
   }
 
@@ -42,6 +42,7 @@ function tryParseJSON(jsonString) {
 function buildSwaggerJSON(data) {
   
   var keys = Object.keys(data);
+  
   var op = {
     required: {},
     properties: {}
@@ -49,17 +50,13 @@ function buildSwaggerJSON(data) {
   keys.forEach(function(x) {
     var value = data[x];
     
-    if(value === null || value === ""){
+    console.log(value)
+
+    if(value === null || value === "" || (!value)){
       
-      op = {
-        required: {},
-        properties: keys
-      };
+      op.properties = keys
     } else{
-      op = {
-        required : keys,
-        properties : {}
-      }
+      op.required = keys
     } 
     var typeData = typeOf(value);
     if (["array", "object", "null"].indexOf(typeData) === -1) {
