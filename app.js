@@ -43,8 +43,8 @@ if(process.env['EXTEND_SPEC'] === 'YES') {
       res.json({status : 'route added to specification'})
     }
     else {
-      console.log('here comes here')
-      res.json({status : 'route exist'})
+      console.log('Route already exist.')
+      res.json({status : 'route exist.'})
     }
   })
 }
@@ -57,7 +57,7 @@ new OpenApiValidator({
 }).install(app).then(() => {
 
   app.post('/:class/?:method', (req, res) => {
-    res.json({ status: res })
+    res.json({ "status": "working" })
   })
   app.get('/:class/?:method', (req, res) => {
     console.log(req.params)
