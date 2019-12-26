@@ -4,27 +4,16 @@ var showExample = false;
 
 module.exports = function processJSON(jsonString, show) {
   showExample = show
-  // var jsonString = jsonEditor.getValue().trim();
-  //const stringJson = JSON.stringify(jsonString)
+  
   if (tryParseJSON(jsonString) === true) {
-    //var json = JSON.parse(jsonString);
     var json = jsonString;
-
     var yamlReady = buildSwaggerJSON(json);
     return yamlReady;
-  //   jsonEditor2.setValue(JSON.stringify(yamlReady, null, 4));
-  //   var x = stringify(yamlReady);
-  //   yamlEditor.setValue(x);
-  //   tinyToast.show("✔ Conversion complete");
-  // } else {
-  //   tinyToast.show("Invalid JSON. Have properties names in quotes");
-  // }
-}
+ }
 }
 function tryParseJSON(jsonString) {
   
   try {
-    //var o = JSON.parse(jsonString);
     var o = jsonString;
     if (o && typeof o === "object") {
       return true;
@@ -33,7 +22,6 @@ function tryParseJSON(jsonString) {
     console.error(e, jsonString);
     return false;
   }
-
   return false;
 }
 

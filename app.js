@@ -30,7 +30,14 @@ app.use(express.urlencoded({ extended: true }));
 if(process.env['EXTEND_SPEC'] === 'YES') {
   app.post('/create-spec', (req, res) => {
     
-    var newRoute = '/' + req.body.url.join('/').toLowerCase();
+    var newRoute = null;
+
+    if(Array.isArray(req.body.url)){
+      newRoute = '/' + req.body.url.join('/').toLowerCase();
+    }else {
+      newRoute = req.body.url
+    }
+    
   
     var requestBlock = {}
   
