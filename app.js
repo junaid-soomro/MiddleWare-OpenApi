@@ -36,14 +36,12 @@ if(process.env['EXTEND_SPEC'] === 'YES') {
   
     if (!openApiSpecOrch['paths'][newRoute]) {
       requestBlock = OpenApiRouteBlock(newRoute, req.body.reqBody);
-      console.log(requestBlock);
-      openApiSpecOrch.paths[Object.keys(requestBlock)[0]] = requestBlock[Object.keys(requestBlock)[0]];
-      console.log("openApiSpecOrch", openApiSpecOrch);
+      const routePath = Object.keys(requestBlock)[0];
+      openApiSpecOrch.paths[routePath] = requestBlock[routePath];
       writeChangestoSpecFile(requestBlock, openApiSpecOrch)
       res.json({status : 'route added to specification'})
     }
     else {
-      console.log('Route already exist.')
       res.json({status : 'route exist.'})
     }
   })
@@ -57,6 +55,7 @@ new OpenApiValidator({
 }).install(app).then(() => {
 
   app.post('/:class/?:method', (req, res) => {
+    console.log(req.body)
     res.json({ "status": "working" })
   })
   app.get('/:class/?:method', (req, res) => {

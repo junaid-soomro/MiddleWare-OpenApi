@@ -11,7 +11,6 @@ module.exports = function processJSON(jsonString, show) {
     var json = jsonString;
 
     var yamlReady = buildSwaggerJSON(json);
-   console.log('yamlready',yamlReady)
     return yamlReady;
   //   jsonEditor2.setValue(JSON.stringify(yamlReady, null, 4));
   //   var x = stringify(yamlReady);
@@ -42,20 +41,27 @@ function buildSwaggerJSON(data) {
   
   var keys = Object.keys(data);
   var op = {
+    type : typeOf(data),
     required: keys,
     properties: {}
   };
+
   keys.forEach(function(x) {
     var value = data[x];
   
     var typeData = typeOf(value);
+    // if typeData does not include array object or null
     if (["array", "object", "null"].indexOf(typeData) === -1) {
       op.properties[x] = {
-        type: typeData
+        type: typeData // string //boolean //number 
       };
+
       if (showExample === true) op.properties[x].example = value;
     } else {
+
+
       switch (typeData) {
+        
         case "array":
           typeData = typeOf(data[x][0]);
           if (typeData === "array") {
@@ -83,10 +89,12 @@ function buildSwaggerJSON(data) {
           };
           if (showExample === true) op.properties[x].example = value;
           break;
-        case "object":
+       
+       case "object":
           op.properties[x] = buildSwaggerJSON(data[x]);
           op.properties[x].type = "object";
           break;
+
         default:
           console.warn("skipping ", typeData);
           break;

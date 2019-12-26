@@ -117,9 +117,13 @@ module.exports = (route, body) => {
         const jsonSchema = schemaCreator(parsedBody)
 
         //Appending newly created json schema to request body.
+        // if(typeOf(parsedBody) === 'array'){
+        //     routeBlock[route]['post']['requestBody']['content']['application/json']['schema'] = {type : typeOf(parsedBody),minItems : parsedBody.length,maxItems : parsedBody.length, ...jsonSchema}
+        // }else{
+        routeBlock[route]['post']['requestBody']['content']['application/json']['schema'] = jsonSchema
 
-        routeBlock[route]['post']['requestBody']['content']['application/json']['schema'] = {type : typeOf(parsedBody), ...jsonSchema}
-
+        // routeBlock[route]['post']['requestBody']['content']['application/json']['schema'] = {type : typeOf(parsedBody), ...jsonSchema}
+        // }
     }
 
     
