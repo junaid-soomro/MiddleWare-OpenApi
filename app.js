@@ -53,6 +53,21 @@ new OpenApiValidator({
 }).install(app).then(() => {
 
   app.post('/:class/?:method', (req, res) => {
+  
+
+    var keys = Object.keys(req.body)
+
+    keys.forEach(function(x) {
+
+      if (!openApiSpecOrch['paths'][req.url]['post']['requestBody']['content']['application/json']['schema']['properties'][x]) {
+        res.send({"status" : "Invalid properties"})
+      
+      }
+
+    });
+
+    
+    
     res.json({ "status": "working" })
   })
   app.get('/:class/?:method', (req, res) => {
