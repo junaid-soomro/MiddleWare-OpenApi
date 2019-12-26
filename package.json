@@ -14,7 +14,9 @@
     "http-errors": "~1.6.3",
     "ibm-openapi-validator": "^0.16.0",
     "morgan": "~1.9.1",
+    "nodemon": "^2.0.2",
     "pug": "2.0.0-beta11",
-    "swagger-ui-express": "^4.1.2"
+    "swagger-ui-express": "^4.1.2",
+    "umi-request": "^1.2.17"
   }
 }
