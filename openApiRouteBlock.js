@@ -6,8 +6,10 @@ const schemaCreator = require('./schemaCreator.js');
 module.exports = (route, body) => {
     const parsedBody = body
     let routeBlock = {}
+
+    //if request Body isEmpty
+    //then request is GET
     if (Object.keys(parsedBody).length === 0) {
-        //Request is GET.
         routeBlock = {
             [route]: {
                 'get': {
@@ -58,7 +60,8 @@ module.exports = (route, body) => {
             }
         }
     } else {
-        //Request is POST.
+        //RequestBody not null
+        //Request if POST
 
         routeBlock = {
             [route]: {
