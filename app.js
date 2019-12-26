@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 
 if(process.env['EXTEND_SPEC'] === 'YES') {
   app.post('/create-spec', (req, res) => {
-    console.log('asdasdasdasd');
+    
     var newRoute = '/' + req.body.url.join('/').toLowerCase();
   
     var requestBlock = {}
@@ -38,7 +38,7 @@ if(process.env['EXTEND_SPEC'] === 'YES') {
       requestBlock = OpenApiRouteBlock(newRoute, req.body.reqBody);
       const routePath = Object.keys(requestBlock)[0];
       openApiSpecOrch.paths[routePath] = requestBlock[routePath];
-      writeChangestoSpecFile(requestBlock, openApiSpecOrch)
+      writeChangestoSpecFile(openApiSpecOrch)
       res.json({status : 'route added to specification'})
     }
     else {
@@ -55,11 +55,11 @@ new OpenApiValidator({
 }).install(app).then(() => {
 
   app.post('/:class/?:method', (req, res) => {
-    console.log(req.body)
+    
     res.json({ "status": "working" })
   })
   app.get('/:class/?:method', (req, res) => {
-    console.log(req.params)
+    
     res.json({ id: req.params.id, name: 'sparky' })
   })
 
