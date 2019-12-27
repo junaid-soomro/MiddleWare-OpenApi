@@ -8,20 +8,34 @@ const ORCH = {
 /* GET users listing. */
 router.route('/:class/:method')
     .get(async (req, res, next) => {
-        console.log("In orch get")
 
         let orchResponse = null;
         try {
-            console.log(req.params)
-            orchResponse = await request.get(ORCH.endpoint({ className: req.params.class, method: req.params.method }), { headers: { ...req.headers }, getResponse: true })
+            orchResponse = await request.post(ORCH.endpoint({ className: req.params.class, method: req.params.method }), { headers: { ...req.headers }, getResponse: true })
             res.status(orchResponse.response.status).json({ ...orchResponse.data })
         }
         catch (e) {
-
+            next({
+                status: e.response.status,
+                message: e.data.body.message,
+                errors: null
+            })
         }
     })
-    .post((req, res, next) => {
-        res.json({ status: 'ok' })
+    .post(async (req, res, next) => {
+
+        let orchResponse = null;
+        try {
+            orchResponse = await request.post(ORCH.endpoint({ className: req.params.class, method: req.params.method }), { headers: { ...req.headers }, data: { ...req.body }, getResponse: true })
+            res.status(orchResponse.response.status).json({ ...orchResponse.data })
+        }
+        catch (e) {
+            next({
+                status: e.response.status,
+                message: e.data.body.message,
+                errors: null
+            })
+        }
     })
 
 module.exports = router;

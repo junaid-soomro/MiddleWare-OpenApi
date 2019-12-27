@@ -1,5 +1,10 @@
 {
     "openapi": "3.0.0",
+    "servers": [
+        {
+            "url": "/api/v1/service"
+        }
+    ],
     "info": {
         "title": "Orchestrator Spec File",
         "version": "0.1.9"
@@ -95,7 +100,7 @@
                 }
             }
         },
-        "/statistics/instancesstatus": {
+        "/statistics/instance_status": {
             "get": {
                 "parameters": [
                     {
@@ -230,7 +235,7 @@
                 }
             }
         },
-        "/statistics/securitygroups": {
+        "/statistics/security_groups": {
             "get": {
                 "parameters": [
                     {
@@ -320,7 +325,7 @@
                 }
             }
         },
-        "/statistics/vmstatus": {
+        "/statistics/vm_status": {
             "get": {
                 "parameters": [
                     {
@@ -1130,59 +1135,6 @@
                 }
             }
         },
-        "/compute/delete": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "required": [
-                                    "0"
-                                ],
-                                "properties": {
-                                    "0": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
         "/compute/start_server": {
             "post": {
                 "parameters": [
@@ -1739,6 +1691,113 @@
                 }
             }
         },
+        "/login": {
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "username",
+                                    "password",
+                                    "organization"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "organization": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "delete": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Logged out successfully."
+                    }
+                }
+            }
+        },
+        "/change-projects": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "project_id"
+                                ],
+                                "properties": {
+                                    "project_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
         "/compute/delete_volume_attachment": {
             "post": {
                 "parameters": [
@@ -2079,7 +2138,6 @@
                             "schema": {
                                 "type": "object",
                                 "required": [
-                                    "description",
                                     "name"
                                 ],
                                 "properties": {
@@ -2423,59 +2481,6 @@
                 }
             }
         },
-        "/volume/delete": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "required": [
-                                    "0"
-                                ],
-                                "properties": {
-                                    "0": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
         "/volume/create": {
             "post": {
                 "parameters": [
@@ -2517,6 +2522,15 @@
                                     "availability_zone"
                                 ],
                                 "properties": {
+                                    "snapshot_id": {
+                                        "type": "string"
+                                    },
+                                    "image_id": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
                                     "size": {
                                         "type": "number"
                                     },
@@ -2582,6 +2596,9 @@
                                     "source"
                                 ],
                                 "properties": {
+                                    "description": {
+                                        "type": "string"
+                                    },
                                     "force": {
                                         "type": "boolean"
                                     },
@@ -2649,295 +2666,6 @@
                                         "type": "number"
                                     },
                                     "volume_id": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
-        "/compute/delete_keypair": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "required": [
-                                    "0"
-                                ],
-                                "properties": {
-                                    "0": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
-        "/compute/create_keypair": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "required": [
-                                    "name"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
-        "/network/delete_network": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "required": [
-                                    "0"
-                                ],
-                                "properties": {
-                                    "0": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
-        "/network/delete_subnet": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "required": [
-                                    "0",
-                                    "1"
-                                ],
-                                "properties": {
-                                    "0": {
-                                        "type": "string"
-                                    },
-                                    "1": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
-        "/network/create_subnet": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "required": [
-                                    "network_id",
-                                    "cidr",
-                                    "ip_version",
-                                    "is_dhcp_enabled",
-                                    "subnet_name",
-                                    "name"
-                                ],
-                                "properties": {
-                                    "network_id": {
-                                        "type": "string"
-                                    },
-                                    "cidr": {
-                                        "type": "string"
-                                    },
-                                    "ip_version": {
-                                        "type": "string"
-                                    },
-                                    "is_dhcp_enabled": {
-                                        "type": "boolean"
-                                    },
-                                    "subnet_name": {
-                                        "type": "string"
-                                    },
-                                    "name": {
                                         "type": "string"
                                     }
                                 }
@@ -3182,6 +2910,18 @@
                                     },
                                     "name": {
                                         "type": "string"
+                                    },
+                                    "specify_ip": {
+                                        "type": "string"
+                                    },
+                                    "binding__vnic_type": {
+                                        "type": "string"
+                                    },
+                                    "subnet_id": {
+                                        "type": "string"
+                                    },
+                                    "fixed_ip": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -3295,59 +3035,6 @@
                                         "type": "string"
                                     },
                                     "router": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
-        "/network/delete_router": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "required": [
-                                    "0"
-                                ],
-                                "properties": {
-                                    "0": {
                                         "type": "string"
                                     }
                                 }
@@ -3533,6 +3220,15 @@
                                     "remote_ip_prefix"
                                 ],
                                 "properties": {
+                                    "port_range_min": {
+                                        "type": "number"
+                                    },
+                                    "port_range_max": {
+                                        "type": "number"
+                                    },
+                                    "port": {
+                                        "type": "number"
+                                    },
                                     "security_group_id": {
                                         "type": "string"
                                     },
@@ -3553,104 +3249,6 @@
                 "responses": {
                     "201": {
                         "description": "Just a description"
-                    }
-                }
-            }
-        },
-        "/network/delete_security_group": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "required": [
-                                    "0"
-                                ],
-                                "properties": {
-                                    "0": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
-        "/network/create_ip": {
-            "get": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }
@@ -4537,60 +4135,25 @@
                                     "name"
                                 ],
                                 "properties": {
+                                    "description": {
+                                        "type": "string"
+                                    },
                                     "name": {
                                         "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
-        "/iam/delete_group": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "required": [
-                                    "0"
-                                ],
-                                "properties": {
-                                    "0": {
+                                    },
+                                    "users": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "project_id": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "role_id": {
                                         "type": "string"
                                     }
                                 }
@@ -4646,6 +4209,18 @@
                                     "email"
                                 ],
                                 "properties": {
+                                    "last_name": {
+                                        "type": "string"
+                                    },
+                                    "role_id": {
+                                        "type": "string"
+                                    },
+                                    "first_name": {
+                                        "type": "string"
+                                    },
+                                    "default_project_id": {
+                                        "type": "string"
+                                    },
                                     "name": {
                                         "type": "string"
                                     },
@@ -4656,59 +4231,6 @@
                                         "type": "string"
                                     },
                                     "email": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Just a description"
-                    }
-                }
-            }
-        },
-        "/iam/delete_user": {
-            "post": {
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Auth-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Scope",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Org",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "required": [
-                                    "0"
-                                ],
-                                "properties": {
-                                    "0": {
                                         "type": "string"
                                     }
                                 }
@@ -4831,9 +4353,7 @@
                                     "flavor_id",
                                     "block_device_mapping_v2",
                                     "name",
-                                    "security_groups",
                                     "image_id",
-                                    "key_name",
                                     "region",
                                     "networks"
                                 ],
@@ -4900,6 +4420,864 @@
                                                 }
                                             }
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/compute/create_keypair": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "public_key": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/network/create_network": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "net",
+                                    "subnet"
+                                ],
+                                "properties": {
+                                    "net": {
+                                        "type": "object",
+                                        "required": [
+                                            "region",
+                                            "is_router_external",
+                                            "name",
+                                            "shared"
+                                        ],
+                                        "properties": {
+                                            "region": {
+                                                "type": "string"
+                                            },
+                                            "is_router_external": {
+                                                "type": "boolean"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "shared": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "subnet": {
+                                        "type": "object",
+                                        "required": [
+                                            "cidr",
+                                            "allocation_pools",
+                                            "dns_nameservers",
+                                            "gateway_ip",
+                                            "name",
+                                            "ip_version"
+                                        ],
+                                        "properties": {
+                                            "cidr": {
+                                                "type": "string"
+                                            },
+                                            "allocation_pools": {
+                                                "type": "string"
+                                            },
+                                            "dns_nameservers": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "gateway_ip": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "ip_version": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/network/create_subnet": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "network_id",
+                                    "cidr",
+                                    "ip_version",
+                                    "is_dhcp_enabled",
+                                    "subnet_name",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "is_dhcp_enabled": {
+                                        "type": "boolean"
+                                    },
+                                    "dns_servers": {
+                                        "type": "string"
+                                    },
+                                    "allocation_pools": {
+                                        "type": "string"
+                                    },
+                                    "network_id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "gateway_ip": {
+                                        "type": "string"
+                                    },
+                                    "subnet_name": {
+                                        "type": "string"
+                                    },
+                                    "cidr": {
+                                        "type": "string"
+                                    },
+                                    "ip_version": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/network/create_ip": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "floating_network_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/network/delete_network": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/compute/delete": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/volume/delete": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/compute/delete_keypair": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/network/delete_subnet": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "network_id",
+                                    "subnet_id"
+                                ],
+                                "properties": {
+                                    "network_id": {
+                                        "type": "string"
+                                    },
+                                    "subnet_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/network/delete_security_group": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/iam/delete_group": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/iam/delete_user": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/network/delete_ip": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Just a description"
+                    }
+                }
+            }
+        },
+        "/compute/remove_floating_ip_from_server": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Auth-Token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Scope",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-Org",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "floating_ip",
+                                    "instance_id"
+                                ],
+                                "properties": {
+                                    "floating_ip": {
+                                        "type": "string"
+                                    },
+                                    "instance_id": {
+                                        "type": "string"
                                     }
                                 }
                             }

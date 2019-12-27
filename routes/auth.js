@@ -49,12 +49,13 @@ router.delete('/logout', async (req, res, next) => {
   try {
 
     logoutResult = await request.delete(routes.LOGOUT.endpoint, { getResponse: true, headers: { ...req.headers } })
-    res.status(logoutResult.response.status).json({ ...logoutResult })
+    res.status(logoutResult.response.status).json({ ...logoutResult.data })
   }
   catch (e) {
+
     next({
       status: e.response.status,
-      message: e.data.body.message,
+      message: e.data.data.error.message,
       errors: null
     })
   }
@@ -62,7 +63,6 @@ router.delete('/logout', async (req, res, next) => {
 })
 
 router.post('/change-project', async (req, res, next) => {
-  console.log("In change project")
   let changeProjectRequest = null;
   try {
     changeProjectRequest = await request.post(routes.CHANGE_PROJECT.endpoint, { getResponse: true, data: { ...req.body } })

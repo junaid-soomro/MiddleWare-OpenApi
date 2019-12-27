@@ -56,26 +56,32 @@ if (process.env['EXTEND_SPEC'] === 'YES') {
   })
 }
 
-// new OpenApiValidator({
-//   apiSpec: './orchestratorOpenApi.json',
-//   validateRequests: true,
-//   validateResponses: false
-// }).install(app).then(() => {
+new OpenApiValidator({
+  apiSpec: './orchestratorOpenApi.json',
+  validateRequests: true,
+  validateResponses: false
+}).install(app).then(() => {
+
+  app.use('/api/v1/auth', auth);
+  app.use('/api/v1/service', orchestrator);
 
 
-app.use('/api/v1/service', orchestrator);
+  app.use((req, res, next) => {
+    next(new Error('route not found'));
+  })
 
-app.use('/api/v1/auth', auth);
 
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500).json({
+      message: err.message,
+      errors: err.errors,
+    });
 
-
-app.use((err, req, res, next) => {
-  res.status(err.status || 500).json({
-    message: err.message,
-    errors: err.errors,
   });
-});
 
-// })
+
+})
+
+
 
 module.exports = app;
