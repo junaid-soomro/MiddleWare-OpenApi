@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var request = require("umi-request").default;
+const requestAndLog = require('../utils');
 
 const ORCH = {
     endpoint: ({ className, method }) => (`http://10.81.1.61:8002/backend_service?method=${className}.${method}`)
@@ -11,13 +12,14 @@ router.route('/:class/:method')
 
         let orchResponse = null;
         try {
-            orchResponse = await request.post(ORCH.endpoint({ className: req.params.class, method: req.params.method }), { headers: { ...req.headers }, getResponse: true })
+            const url = ORCH.endpoint({ className: req.params.class, method: req.params.method });
+            orchResponse = await request.post(url, { headers: { ...req.headers }, getResponse: true });
             res.status(orchResponse.response.status).json({ ...orchResponse.data })
         }
         catch (e) {
             next({
-                status: e.response.status,
-                message: e.data.body.message,
+                status: e,
+                message: e,
                 errors: null
             })
         }
@@ -26,8 +28,14 @@ router.route('/:class/:method')
 
         let orchResponse = null;
         try {
-            orchResponse = await request.post(ORCH.endpoint({ className: req.params.class, method: req.params.method }), { headers: { ...req.headers }, data: { ...req.body }, getResponse: true })
-            res.status(orchResponse.response.status).json({ ...orchResponse.data })
+            const { params, headers, body } = req;
+            const url = ORCH.endpoint({ className: params.class, method: params.method });
+            const method = "post";
+            console.log('body: ', body);
+            const resp = await requestAndLog(url, method, headers, params, body);
+            console.log('resp: ', resp);
+            //orchResponse = await request.post(ORCH.endpoint({ className: req.params.class, method: req.params.method }), { headers: { ...req.headers }, data: { ...req.body }, getResponse: true })
+            res.status(resp.response.status).json({ ...resp.data })
         }
         catch (e) {
             next({

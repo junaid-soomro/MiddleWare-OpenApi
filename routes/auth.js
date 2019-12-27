@@ -6,7 +6,7 @@ const request = require('umi-request').default;
 
 const routes = {
   LOGIN: {
-    endpoint: 'http://10.81.1.61:3000/auth/login',
+    endpoint: 'http://10.81.1.77:3000/auth/login',
     payload: ({ organization, username, password }) => ({
       organization,
       username,
@@ -14,13 +14,13 @@ const routes = {
     })
   },
   CHANGE_PROJECT: {
-    endpoint: 'http://10.81.1.61:3000/auth/change-project',
+    endpoint: 'http://10.81.1.77:3000/auth/change-project',
     payload: () => ({
 
     })
   },
   LOGOUT: {
-    endpoint: 'http://10.81.1.61:3000/auth/logout'
+    endpoint: 'http://10.81.1.77:3000/auth/logout'
   }
 }
 
@@ -28,15 +28,18 @@ router.post('/login', async (req, res, next) => {
 
   let loginPayload = null;
   let result = null;
+  console.log('req:', req)
   try {
     loginPayload = routes.LOGIN.payload({ ...req.body })
     result = await request.post(routes.LOGIN.endpoint, { data: loginPayload, getResponse: true });
+    console.log('result: ', result)
     res.status(result.response.status).json({ ...result.data })
   }
   catch (e) {
+    console.log('e::', e)
     next({
-      status: e.response.status,
-      message: e.data.body.message,
+      status: e,
+      message: e,
       errors: null
     })
   }
