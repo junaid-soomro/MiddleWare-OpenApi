@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 const request = require('umi-request').default;
-
+const IAM_BASEURL = 'http://10.81.1.77:4000';
 /* GET users listing. */
 
 const routes = {
   LOGIN: {
-    endpoint: 'http://10.81.1.62:3000/auth/login',
+    endpoint: `${IAM_BASEURL}/auth/login`,
     payload: ({ organization, username, password }) => ({
       organization,
       username,
@@ -14,13 +14,13 @@ const routes = {
     })
   },
   CHANGE_PROJECT: {
-    endpoint: 'http://10.81.1.62:3000/auth/change-project',
+    endpoint: `${IAM_BASEURL}/auth/change-project`,
     payload: () => ({
 
     })
   },
   LOGOUT: {
-    endpoint: 'http://10.81.1.62:3000/auth/logout'
+    endpoint: `${IAM_BASEURL}/auth/logout`
   }
 }
 
