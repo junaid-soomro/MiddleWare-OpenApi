@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 const request = require('umi-request').default;
-
+const IAM_BASEURL = 'http://10.81.1.77:4000';
 /* GET users listing. */
 
 const routes = {
   LOGIN: {
-    endpoint: 'http://10.81.1.77:3000/auth/login',
+    endpoint: `${IAM_BASEURL}/auth/login`,
     payload: ({ organization, username, password }) => ({
       organization,
       username,
@@ -14,13 +14,13 @@ const routes = {
     })
   },
   CHANGE_PROJECT: {
-    endpoint: 'http://10.81.1.77:3000/auth/change-project',
+    endpoint: `${IAM_BASEURL}/auth/change-project`,
     payload: () => ({
 
     })
   },
   LOGOUT: {
-    endpoint: 'http://10.81.1.77:3000/auth/logout'
+    endpoint: `${IAM_BASEURL}/auth/logout`
   }
 }
 
@@ -28,15 +28,12 @@ router.post('/login', async (req, res, next) => {
 
   let loginPayload = null;
   let result = null;
-  console.log('req:', req)
   try {
     loginPayload = routes.LOGIN.payload({ ...req.body })
     result = await request.post(routes.LOGIN.endpoint, { data: loginPayload, getResponse: true });
-    console.log('result: ', result)
     res.status(result.response.status).json({ ...result.data })
   }
   catch (e) {
-    console.log('e::', e)
     next({
       status: e,
       message: e,
