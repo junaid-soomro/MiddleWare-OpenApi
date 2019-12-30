@@ -3,7 +3,7 @@ var router = express.Router();
 var request = require("umi-request").default;
 
 const ORCH = {
-    endpoint: ({ className, method }) => (`http://10.81.1.61:8002/backend_service?method=${className}.${method}`)
+    endpoint: ({ className, method }) => (`http://10.81.1.62:8002/backend_service?method=${className}.${method}`)
 }
 /* GET users listing. */
 router.route('/:class/:method')
@@ -15,11 +15,16 @@ router.route('/:class/:method')
             res.status(orchResponse.response.status).json({ ...orchResponse.data })
         }
         catch (e) {
-            next({
-                status: e.response.status,
-                message: e.data.body.message,
-                errors: null
-            })
+            try {
+                next({
+                    status: e.response.status,
+                    message: e.data.body.message,
+                    errors: null
+                })
+            } catch (unknownException) {
+                next({ ...e });
+            }
+
         }
     })
     .post(async (req, res, next) => {
