@@ -4,7 +4,7 @@ var request = require("umi-request").default;
 const requestAndLog = require('../utils');
 
 const ORCH = {
-    endpoint: ({ className, method }) => (`http://10.81.1.61:8002/backend_service?method=${className}.${method}`)
+    endpoint: ({ className, method }) => (`http://10.81.1.62:8002/backend_service?method=${className}.${method}`)
 }
 /* GET users listing. */
 router.route('/:class/:method')
